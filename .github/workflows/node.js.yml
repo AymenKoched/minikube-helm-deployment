@@ -29,6 +29,8 @@ jobs:
     backend:
         name: 'Build , Push & Deploy Backend'
         runs-on: ubuntu-latest
+        needs: filter
+        if: ${{ needs.filter.outputs.backend == 'true' }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -50,6 +52,8 @@ jobs:
     frontend:
         name: 'Build , Push & Deploy Frontend'
         runs-on: ubuntu-latest
+        needs: filter
+        if: ${{ needs.filter.outputs.frontend == 'true' }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
