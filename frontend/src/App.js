@@ -7,7 +7,7 @@ function App() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get(`http://192.168.49.2:7001/api/message`)
+        axios.get(`http://192.168.49.2:30001/api/message`)
             .then(response => setMessage(response.data.message))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
