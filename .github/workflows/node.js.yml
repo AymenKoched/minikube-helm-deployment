@@ -25,4 +25,4 @@ jobs:
 
             - name: Push backend image
               run: |
-                  docker push aymenkoched02/backend-image:latest
+                  docker push aymenkoched02/backend-helm-image:latest
