@@ -3,7 +3,7 @@ name: Build and Push and Deploy Docker Images
 on:
     push:
         branches:
-            - main
+            - master
 
 jobs:
     backend:
