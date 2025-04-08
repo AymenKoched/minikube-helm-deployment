@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+
+spec:
+  selector:
+    matchLabels:
+      app: frontend-pods
+
+  replicas: 3
+
+  template:
+    metadata:
+      name: frontend-pod
+      labels:
+        app: frontend-pods
+    spec:
+      containers:
+        - name: frontend
+          image: aymenkoched02/frontend-helm-image:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "256Mi"
+              cpu: "1"
