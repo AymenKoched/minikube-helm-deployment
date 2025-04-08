@@ -6,6 +6,26 @@ on:
             - master
 
 jobs:
+    filter:
+        name: Filter Changed Paths
+        runs-on: ubuntu-latest
+        outputs:
+            backend: ${{ steps.filter.outputs.backend }}
+            frontend: ${{ steps.filter.outputs.frontend }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Filter changes
+              id: filter
+              uses: dorny/paths-filter@v2
+              with:
+                  filters: |
+                    backend:
+                        - 'backend/**'
+                    frontend:
+                        - 'frontend/**'
+
     backend:
         name: 'Build , Push & Deploy Backend'
         runs-on: ubuntu-latest
