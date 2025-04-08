@@ -7,7 +7,7 @@ function App() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get(`http://backend-service:7001/api/message`)
+        axios.get(`http://my-demo/api/message`)
             .then(response => setMessage(response.data.message))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
