@@ -5,8 +5,7 @@ import axios from "axios";
 
 function App() {
     const [message, setMessage] = useState('');
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-    console.log({BACKEND_URL});
+
     useEffect(() => {
         axios.get(`http://localhost:7001/api/message`)
             .then(response => setMessage(response.data.message))

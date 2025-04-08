@@ -3,12 +3,12 @@ version: '2.3'
 services:
   helm-backend:
     container_name: helm-backend
-    image: helm-backend:latest
+    image: aymenkoched02/helm-backend:latest
     ports:
       - '7001:7001'
 
   helm-frontend:
     container_name: helm-frontend
-    image: helm-frontend:latest
+    image: aymenkoched02/helm-frontend:latest
     ports:
       - '80:80'
