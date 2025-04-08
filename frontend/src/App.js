@@ -10,7 +10,7 @@ function App() {
         axios.get(`http://localhost:7001/api/message`)
             .then(response => setMessage(response.data.message))
             .catch(error => console.error('Error fetching data:', error));
-    }, [BACKEND_URL]);
+    }, []);
 
     return (
     <div className="App">
