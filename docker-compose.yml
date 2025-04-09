@@ -9,6 +9,11 @@ services:
 
   helm-frontend:
     container_name: helm-frontend
-    image: aymenkoched02/frontend-helm-image:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_BACKEND_HOST=localhost
+        - REACT_APP_BACKEND_PORT=7001
     ports:
       - '80:80'

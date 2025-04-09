@@ -5,12 +5,15 @@ import axios from "axios";
 
 function App() {
     const [message, setMessage] = useState('');
+    const host = process.env.REACT_APP_BACKEND_HOST;
+    const port = process.env.REACT_APP_BACKEND_PORT;
+    console.log({host, port});
 
     useEffect(() => {
-        axios.get(`http://my-demo/api/message`)
+        axios.get(`http://${host}:${port}/api/message`)
             .then(response => setMessage(response.data.message))
             .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [host, port]);
 
     return (
     <div className="App">
