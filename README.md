@@ -5,7 +5,8 @@ This guide explains how to run and deploy a fullstack React and Express applicat
 1. Development Mode
 2. Docker Compose
 3. Kubernetes with Minikube
-4. GitHub Actions CI
+4. Helm with Minikube
+5. GitHub Actions CI
 
 ---
 
@@ -227,7 +228,7 @@ CMD ["/startup.sh"]
 
 ---
 
-## Kubernetes Backend Configuration
+### Kubernetes Backend Configuration
 
 **backend-deployment.yaml**
 ```yaml
@@ -288,7 +289,7 @@ http://127.0.0.1:41757
 
 ---
 
-## Kubernetes Frontend Configuration
+### Kubernetes Frontend Configuration
 
 **frontend-deployment.yaml**
 ```yaml
@@ -348,7 +349,80 @@ minikube service frontend-service
 
 ---
 
-## GitHub Actions CI/CD
+## 4. Helm with Minikube
+
+The Helm chart simplifies and templatizes Kubernetes deployments for both frontend and backend.
+
+### Values.yaml Overview
+
+We define replicas, container images, resources, and service exposure types:
+
+- Set `service.type` to `LoadBalancer` to enable external access via `minikube tunnel`.
+- Environment variables are still injected using the Helm template system.
+- `REACT_APP_BACKEND_HOST=localhost` and `REACT_APP_BACKEND_PORT=7001` because `minikube tunnel` forwards LoadBalancer services to your localhost.
+
+> Run `minikube tunnel` in a separate terminal to simulate LoadBalancer behavior locally.
+
+```yaml
+replicaCount: 3
+
+backend:
+  image:
+    repository: "aymenkoched02/backend-helm-image"
+    tag: "latest"
+  containerPort: 7001
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+  service:
+    type: LoadBalancer
+    port: 7001
+    targetPort: 7001
+    nodePort: 30001
+  labels:
+    app: backend
+    tier: api
+  podLabels:
+    app: backend-pods
+    tier: api
+
+frontend:
+  image:
+    repository: "aymenkoched02/frontend-helm-image"
+    tag: "latest"
+  containerPort: 80
+  env:
+    REACT_APP_BACKEND_HOST: "localhost"
+    REACT_APP_BACKEND_PORT: "7001"
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "500m"
+    limits:
+      memory: "256Mi"
+      cpu: "1"
+  service:
+    type: LoadBalancer
+    port: 80
+    targetPort: 80
+    nodePort: 30002
+  labels:
+    app: frontend
+    tier: web
+  podLabels:
+    app: frontend-pods
+    tier: web
+```
+
+Deployments and services are generated dynamically using Helm templates. This ensures clean and scalable configuration management.
+
+---
+
+## 5. GitHub Actions CI/CD
 
 We use GitHub Actions to automatically build and push Docker images when changes are pushed to the `master` branch.
 

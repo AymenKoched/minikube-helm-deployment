@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend-deployment
+  labels:
+    {{- with .Values.frontend.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- with .Values.frontend.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- with .Values.frontend.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: frontend
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.frontend.containerPort }}
+              protocol: TCP
+          env:
+            - name: REACT_APP_BACKEND_HOST
+              value: "{{ .Values.frontend.env.REACT_APP_BACKEND_HOST }}"
+            - name: REACT_APP_BACKEND_PORT
+              value: "{{ .Values.frontend.env.REACT_APP_BACKEND_PORT }}"
+          resources:
+            requests:
+              memory: {{ .Values.frontend.resources.requests.memory }}
+              cpu: {{ .Values.frontend.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.frontend.resources.limits.memory }}
+              cpu: {{ .Values.frontend.resources.limits.cpu }}

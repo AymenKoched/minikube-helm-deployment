@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-frontend-service
+  labels:
+    {{- with .Values.frontend.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  type: {{ .Values.frontend.service.type | default "LoadBalancer" }}
+  ports:
+    - port: {{ .Values.frontend.service.port }}
+      targetPort: {{ .Values.frontend.service.targetPort }}
+      nodePort: {{ .Values.frontend.service.nodePort }}
+      protocol: TCP
+  selector:
+    {{- with .Values.frontend.podLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}

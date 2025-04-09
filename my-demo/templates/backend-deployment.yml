@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend-deployment
+  labels:
+    {{- with .Values.backend.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- with .Values.backend.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- with .Values.backend.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.backend.containerPort }}
+              protocol: TCP
+          resources:
+            requests:
+              memory: {{ .Values.backend.resources.requests.memory }}
+              cpu: {{ .Values.backend.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.backend.resources.limits.memory }}
+              cpu: {{ .Values.backend.resources.limits.cpu }}
