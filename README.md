@@ -10,6 +10,17 @@ This guide explains how to run and deploy a fullstack React and Express applicat
 
 ---
 
+## Prerequisites Tools
+
+To test and deploy this application, you will need the following tools:
+
+- [Docker](https://docs.docker.com/engine/install/)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+- [Helm](https://helm.sh/docs/intro/install/)
+
+---
+
 ## 1. Development Mode
 
 In development mode, the frontend and backend run separately on different ports using `npm start`.
