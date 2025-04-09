@@ -3,7 +3,9 @@ version: '2.3'
 services:
   helm-backend:
     container_name: helm-backend
-    image: aymenkoched02/backend-helm-image:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - '7001:7001'
 
