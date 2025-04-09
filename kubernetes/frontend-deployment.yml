@@ -29,9 +29,9 @@ spec:
               protocol: TCP
           env:
             - name: REACT_APP_BACKEND_HOST
-              value: backend-service
+              value: "127.0.0.1"
             - name: REACT_APP_BACKEND_PORT
-              value: "7001"
+              value: "41757"
           resources:
             requests:
               memory: "128Mi"
