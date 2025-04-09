@@ -27,6 +27,11 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
+          env:
+            - name: REACT_APP_BACKEND_HOST
+              value: backend-service
+            - name: REACT_APP_BACKEND_PORT
+              value: "7001"
           resources:
             requests:
               memory: "128Mi"

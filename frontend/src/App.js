@@ -5,8 +5,8 @@ import axios from "axios";
 
 function App() {
     const [message, setMessage] = useState('');
-    const host = process.env.REACT_APP_BACKEND_HOST;
-    const port = process.env.REACT_APP_BACKEND_PORT;
+    const host = window._env_?.REACT_APP_BACKEND_HOST || process.env.REACT_APP_BACKEND_HOST;
+    const port = window._env_?.REACT_APP_BACKEND_PORT || process.env.REACT_APP_BACKEND_PORT;
     console.log({host, port});
 
     useEffect(() => {

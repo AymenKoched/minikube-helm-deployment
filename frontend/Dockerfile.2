@@ -18,11 +18,6 @@ FROM nginx:alpine
 
 COPY --from=builder /app/build /usr/share/nginx/html
 
-COPY public/config.template.js /usr/share/nginx/html/config.template.js
-COPY startup.sh /startup.sh
-
-RUN chmod +x /startup.sh
-
 EXPOSE 80
 
-CMD ["/startup.sh"]
+CMD ["nginx", "-g", "daemon off;"]

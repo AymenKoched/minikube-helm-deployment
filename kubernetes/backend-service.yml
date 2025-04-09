@@ -8,11 +8,10 @@ metadata:
     app: backend
 
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 7001
       targetPort: 7001
-      nodePort: 30001
       protocol: TCP
   selector:
     app: backend-pods

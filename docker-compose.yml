@@ -11,7 +11,7 @@ services:
     container_name: helm-frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.2
       args:
         - REACT_APP_BACKEND_HOST=localhost
         - REACT_APP_BACKEND_PORT=7001
